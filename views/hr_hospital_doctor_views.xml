@@ -6,7 +6,6 @@
                 <list>
                     <field name="name"/>
                     <field name="specialty"/>
-<!--                    <field name="partner_id"/>-->
                     <field name="mentor_id"/>
                 </list>
             </field>
@@ -25,7 +24,6 @@
                                 <field name="specialty"/>
                             </group>
                             <group>
-<!--                                <field name="partner_id"/>-->
                                 <field name="mentor_id"/>
                             </group>
                         </group>

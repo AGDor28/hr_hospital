@@ -5,7 +5,6 @@
             <field name="arch" type="xml">
                 <list>
                     <field name="name"/>
-<!--                    <field name="partner_id"/>-->
                     <field name="disease_ids"/>
                     <field name="visit_ids"/>
                 </list>
@@ -24,7 +23,6 @@
                                 <field name="name"/>
                             </group>
                             <group>
-<!--                                <field name="partner_id"/>-->
                                 <field name="disease_ids"/>
                                 <field name="visit_ids"/>
                             </group>
