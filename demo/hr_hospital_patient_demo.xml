@@ -1,0 +1,21 @@
+<odoo>
+    <data>
+        <record id="patient_case_1" model="hr.hospital.patient">
+            <field name="name">John Doe</field>
+            <field name="disease_ids" eval="[(6, 0, [ref('hr_hospital.disease_flu')])]"/>
+        </record>
+
+        <record id="patient_case_2" model="hr.hospital.patient">
+            <field name="name">John Watson</field>
+            <field name="disease_ids" eval="[(6, 0, [
+                ref('hr_hospital.disease_asthma'),
+                ref('hr_hospital.disease_covid')
+            ])]"/>
+        </record>
+
+        <record id="patient_case_3" model="hr.hospital.patient">
+            <field name="name">John Wick</field>
+            <field name="disease_ids" eval="[(6, 0, [ref('hr_hospital.disease_asthma')])]"/>
+        </record>
+    </data>
+</odoo>

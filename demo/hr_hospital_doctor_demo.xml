@@ -1,0 +1,20 @@
+<odoo>
+    <data>
+        <record id="doctor_head" model="hr.hospital.doctor">
+            <field name="name">Dr. Gregory House</field>
+            <field name="specialty">Diagnostic</field>
+            </record>
+
+        <record id="doctor_intern_1" model="hr.hospital.doctor">
+            <field name="name">Dr. Robert Chase</field>
+            <field name="specialty">Surgeon</field>
+            <field name="mentor_id" ref="doctor_head"/>
+        </record>
+
+        <record id="doctor_intern_2" model="hr.hospital.doctor">
+            <field name="name">Dr. Allison Cameron</field>
+            <field name="specialty">Immunology</field>
+            <field name="mentor_id" ref="doctor_head"/>
+        </record>
+    </data>
+</odoo>

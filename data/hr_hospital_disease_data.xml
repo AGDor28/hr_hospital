@@ -1,0 +1,13 @@
+<odoo>
+    <data noupdate="1">
+        <record id="disease_asthma" model="hr.hospital.disease">
+            <field name="name">Asthma</field>
+        </record>
+        <record id="disease_flu" model="hr.hospital.disease">
+            <field name="name">Flu</field>
+        </record>
+        <record id="disease_covid" model="hr.hospital.disease">
+            <field name="name">COVID-19</field>
+        </record>
+    </data>
+</odoo>
