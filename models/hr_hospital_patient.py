@@ -22,7 +22,14 @@ class HospitalPatient(models.Model):
         string='Diseases'
     )
 
-    visit_ids = fields.Many2one(
+    visit_ids = fields.One2many(
         comodel_name='hr.hospital.visit',
+        inverse_name='patient_id',
         string='Visits'
+    )
+
+    doctor_history_ids = fields.One2many(
+        comodel_name='hr.hospital.doctor.history',
+        inverse_name='patient_id',
+        string='Doctor history'
     )

@@ -1,0 +1,13 @@
+<odoo>
+    <data noupdate="1">
+        <record id="category_intern" model="hr.hospital.doctor.category">
+            <field name="name">Intern</field>
+        </record>
+        <record id="category_specialist" model="hr.hospital.doctor.category">
+            <field name="name">Specialist</field>
+        </record>
+        <record id="category_highest" model="hr.hospital.doctor.category">
+            <field name="name">Highest Qualification</field>
+        </record>
+    </data>
+</odoo>

@@ -23,3 +23,14 @@ class HospitalDoctor(models.Model):
         comodel_name='hr.hospital.doctor',
         string='Mentor'
     )
+
+    visit_ids = fields.One2many(
+        comodel_name='hr.hospital.visit',
+        inverse_name='doctor_id',
+        string='Visits'
+    )
+
+    category_id = fields.Many2one(
+        comodel_name='hr.hospital.doctor.category',
+        string='Category'
+    )

@@ -25,6 +25,7 @@
                             <group>
                                 <field name="disease_ids"/>
                                 <field name="visit_ids"/>
+                                <field name="doctor_history_ids"/>
                             </group>
                         </group>
                     </sheet>
