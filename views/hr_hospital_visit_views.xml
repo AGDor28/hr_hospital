@@ -4,9 +4,11 @@
             <field name="model">hr.hospital.visit</field>
             <field name="arch" type="xml">
                 <list>
+                    <field name="planned_date"/>
                     <field name="visit_date"/>
                     <field name="doctor_id"/>
                     <field name="patient_id"/>
+                    <field name="status"/>
                 </list>
             </field>
         </record>
@@ -20,10 +22,15 @@
                     <sheet>
                         <group>
                             <group>
-                                <field name="visit_date"/>
+                                <field name="planned_date" readonly="status != 'planned'"/>
+                                <field name="visit_date" readonly="status != 'planned'"/>
+                                <field name="status"/>
+                                <field name="summary"/>
+                                <field name="disease_id"/>
+                                <field name="active" readonly="status != 'planned'"/>
                             </group>
                             <group>
-                                <field name="doctor_id"/>
+                                <field name="doctor_id" readonly="status != 'planned'"/>
                                 <field name="patient_id"/>
                             </group>
                         </group>
@@ -38,4 +45,9 @@
             <field name="res_model">hr.hospital.visit</field>
             <field name="view_mode">list,form</field>
         </record>
+
+        <menuitem id="hr_hospital_menu_item_visit"
+                  action="action_hr_hospital_visit_window"
+                  parent="hr_hospital_menu_patient"
+                  name="Visit" sequence="200"/>
 </odoo>

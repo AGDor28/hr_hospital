@@ -1,0 +1,33 @@
+<odoo>
+    <data>
+        <record id="doctor_history1" model="hr.hospital.doctor.history">
+            <field name="patient_id" ref="patient_case_1"/>
+            <field name="doctor_id" ref="doctor_intern_1"/>
+            <field name="assignment_date">2026-01-15</field>
+            <field name="reassignment_date">2026-02-15</field>
+            <field name="active">False</field>
+        </record>
+
+        <record id="doctor_history2" model="hr.hospital.doctor.history">
+            <field name="patient_id" ref="patient_case_1"/>
+            <field name="doctor_id" ref="doctor_intern_2"/>
+            <field name="assignment_date">2026-02-15</field>
+            <field name="active">True</field>
+        </record>
+
+        <record id="doctor_history3" model="hr.hospital.doctor.history">
+            <field name="patient_id" ref="patient_case_2"/>
+            <field name="doctor_id" ref="doctor_head"/>
+            <field name="assignment_date">2026-03-03</field>
+            <field name="reassignment_date">2026-05-24</field>
+            <field name="active">False</field>
+        </record>
+
+        <record id="doctor_history4" model="hr.hospital.doctor.history">
+            <field name="patient_id" ref="patient_case_2"/>
+            <field name="doctor_id" ref="doctor_intern_1"/>
+            <field name="assignment_date">2026-05-24</field>
+            <field name="active">True</field>
+        </record>
+    </data>
+</odoo>

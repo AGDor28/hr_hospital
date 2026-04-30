@@ -7,6 +7,8 @@
                     <field name="name"/>
                     <field name="specialty"/>
                     <field name="mentor_id"/>
+                    <field name="category_id"/>
+                    <field name="is_intern"/>
                 </list>
             </field>
         </record>
@@ -22,9 +24,11 @@
                             <group>
                                 <field name="name"/>
                                 <field name="specialty"/>
+                                <field name="category_id"/>
                             </group>
                             <group>
-                                <field name="mentor_id"/>
+                                <field name="is_intern"/>
+                                <field name="mentor_id" invisible="not is_intern" required="is_intern" domain="[('is_intern', '=', False)]"/>
                             </group>
                         </group>
                     </sheet>

@@ -2,18 +2,30 @@
     <data>
         <record id="doctor_head" model="hr.hospital.doctor">
             <field name="name">Dr. Gregory House</field>
+            <field name="email">house@princeton.edu</field>
+            <field name="login">house</field>
+            <field name="password">admin</field>
+            <field name="company_id" ref="base.main_company"/>
             <field name="specialty">Diagnostic</field>
-            </record>
+        </record>
 
         <record id="doctor_intern_1" model="hr.hospital.doctor">
             <field name="name">Dr. Robert Chase</field>
+            <field name="email">chase@princeton.edu</field>
+            <field name="login">chase</field>
+            <field name="password">admin</field>
             <field name="specialty">Surgeon</field>
+            <field name="company_id" ref="base.main_company"/>
             <field name="mentor_id" ref="doctor_head"/>
         </record>
 
         <record id="doctor_intern_2" model="hr.hospital.doctor">
             <field name="name">Dr. Allison Cameron</field>
+            <field name="email">cameron@princeton.edu</field>
+            <field name="login">cameron</field>
+            <field name="password">admin</field>
             <field name="specialty">Immunology</field>
+            <field name="company_id" ref="base.main_company"/>
             <field name="mentor_id" ref="doctor_head"/>
         </record>
     </data>
