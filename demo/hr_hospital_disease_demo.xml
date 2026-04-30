@@ -1,0 +1,22 @@
+<odoo>
+    <data noupdate="1">
+        <record id="disease_infectious" model="hr.hospital.disease">
+            <field name="name">Infectious Diseases</field>
+        </record>
+        <record id="disease_viral" model="hr.hospital.disease">
+            <field name="name">Viral Infections</field>
+            <field name="parent_id" ref="disease_infectious"/>
+        </record>
+        <record id="disease_pneumonia" model="hr.hospital.disease">
+            <field name="name">Pneumonia</field>
+            <field name="parent_id" ref="disease_viral"/>
+        </record>
+        <record id="disease_cardio" model="hr.hospital.disease">
+            <field name="name">Cardiovascular Diseases</field>
+        </record>
+        <record id="disease_hypertension" model="hr.hospital.disease">
+            <field name="name">Hypertension</field>
+            <field name="parent_id" ref="disease_cardio"/>
+        </record>
+    </data>
+</odoo>

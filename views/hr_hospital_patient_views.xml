@@ -5,8 +5,9 @@
             <field name="arch" type="xml">
                 <list>
                     <field name="name"/>
-                    <field name="disease_ids"/>
                     <field name="visit_ids"/>
+                    <field name="insurance_number"/>
+                    <field name="personal_doctor"/>
                 </list>
             </field>
         </record>
@@ -16,15 +17,17 @@
             <field name="model">hr.hospital.patient</field>
             <field name="arch" type="xml">
                 <form>
-                    <header></header>
+                    <header>
+                    </header>
                     <sheet>
                         <group>
                             <group>
                                 <field name="name"/>
+                                <field name="insurance_number"/>
+                                <field name="personal_doctor"/>
                             </group>
                             <group>
                                 <field name="disease_ids"/>
-                                <field name="visit_ids"/>
                                 <field name="doctor_history_ids"/>
                             </group>
                         </group>

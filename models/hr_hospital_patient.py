@@ -8,6 +8,8 @@ class HospitalPatient(models.Model):
     _name = 'hr.hospital.patient'
     _description = 'Patient'
 
+    _inherit = ['hr.hospital.medic.info']
+
     _inherits = {'res.partner': 'partner_id'}
 
     partner_id = fields.Many2one(
@@ -32,4 +34,14 @@ class HospitalPatient(models.Model):
         comodel_name='hr.hospital.doctor.history',
         inverse_name='patient_id',
         string='Doctor history'
+    )
+
+    personal_doctor = fields.Many2one(
+        comodel_name='hr.hospital.doctor',
+        string='Personal Doctor',
+    )
+
+    insurance_number = fields.Char(
+        string='Insurance number',
+        size=20
     )

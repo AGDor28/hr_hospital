@@ -21,6 +21,7 @@
                             <group>
                                 <field name="name"/>
                                 <field name="description"/>
+                                <field name="parent_id"/>
                             </group>
                             <group>
                                 <field name="patient_ids"/>
