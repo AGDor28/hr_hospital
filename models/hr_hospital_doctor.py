@@ -48,10 +48,7 @@ class HospitalDoctor(models.Model):
     @api.depends('mentor_id')
     def _compute_is_intern(self):
         for obj in self:
-            if obj.mentor_id:
-                obj.is_intern = True
-            else:
-                obj.is_intern = False
+            obj.is_intern = bool(obj.mentor_id)
 
     @api.constrains('mentor_id')
     def _check_mentor_not_intern(self):

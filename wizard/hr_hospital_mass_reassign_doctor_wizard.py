@@ -16,7 +16,7 @@ class HospitalMassReassignDoctor(models.TransientModel):
 
     reassignment_date = fields.Date(
         string='Updated At',
-        default=fields.Date.today(),
+        default=fields.Date.today,
     )
 
     def reassign_doctor(self):
