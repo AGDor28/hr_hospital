@@ -25,7 +25,7 @@ class HospitalDoctorHistory(models.Model):
     assignment_date = fields.Date(
         string='Assignment Date',
         required=True,
-        default=fields.Date.today()
+        default=fields.Date.today
     )
 
     reassignment_date = fields.Date(
