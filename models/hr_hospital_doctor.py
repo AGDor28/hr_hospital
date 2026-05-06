@@ -25,7 +25,6 @@ class HospitalDoctor(models.Model):
     mentor_id = fields.Many2one(
         comodel_name='hr.hospital.doctor',
         string='Mentor',
-
     )
 
     visit_ids = fields.One2many(
@@ -45,6 +44,30 @@ class HospitalDoctor(models.Model):
         store=True,
     )
 
+    intern_ids = fields.One2many(
+        comodel_name='hr.hospital.doctor',
+        inverse_name='mentor_id',
+        string='Interns'
+    )
+
+    mentor_specialty = fields.Char(
+        related='mentor_id.specialty',
+        string='Mentor Specialty',
+        readonly=True
+    )
+
+    mentor_phone = fields.Char(
+        related='mentor_id.phone',
+        string='Mentor Phone',
+        readonly=True
+    )
+
+    mentor_email = fields.Char(
+        related='mentor_id.email',
+        string='Mentor Email',
+        readonly=True
+    )
+
     @api.depends('mentor_id')
     def _compute_is_intern(self):
         for obj in self:
@@ -53,9 +76,25 @@ class HospitalDoctor(models.Model):
     @api.constrains('mentor_id')
     def _check_mentor_not_intern(self):
         for obj in self:
-            if obj.mentor_id and obj.mentor_id.is_intern:
-                obj.mentor_id = False
-                raise ValidationError(
-                    f"The selected mentor {obj.mentor_id.name} is an intern. "
-                    "Only a doctor who is not an intern can be a mentor!"
-                )
+            if obj.mentor_id:
+                if obj.mentor_id.id == obj.id:
+                    raise ValidationError("A doctor cannot be their own mentor!")
+                if obj.mentor_id.is_intern:
+                    raise ValidationError(
+                        f"The selected mentor {obj.mentor_id.name} is an intern. "
+                        "Only a doctor who is not an intern can be a mentor!"
+                    )
+
+    def action_create_visit(self):
+        self.ensure_one()
+        return {
+            'name': 'New Visit',
+            'type': 'ir.actions.act_window',
+            'res_model': 'hr.hospital.visit',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {
+                'default_doctor_id': self.id,
+                'default_planned_date': fields.Datetime.now(),
+            }
+        }

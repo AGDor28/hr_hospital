@@ -56,14 +56,19 @@ class HospitalVisitReport(models.TransientModel):
 
         if self.doctor_ids:
             domain.append(('doctor_id', 'in', self.doctor_ids.ids))
+
         if self.patient_ids:
             domain.append(('patient_id', 'in', self.patient_ids.ids))
+
         if self.date_from:
             domain.append(('visit_date', '>=', self.date_from))
+
         if self.date_to:
             domain.append(('visit_date', '<=', self.date_to))
+
         if self.only_completed:
             domain.append(('status', '=', 'completed'))
+
         if self.disease_id:
             domain.append(('disease_id', 'in', self.disease_id.id))
 

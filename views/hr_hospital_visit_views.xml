@@ -1,53 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
-        <record id="hr_hospital_visit_tree" model="ir.ui.view">
-            <field name="name">hr.hospital.visit.tree ()</field>
-            <field name="model">hr.hospital.visit</field>
-            <field name="arch" type="xml">
-                <list>
-                    <field name="planned_date"/>
-                    <field name="visit_date"/>
-                    <field name="doctor_id"/>
-                    <field name="patient_id"/>
-                    <field name="status"/>
-                </list>
-            </field>
-        </record>
+    <record id="hr_hospital_visit_tree" model="ir.ui.view">
+        <field name="name">hr.hospital.visit.tree ()</field>
+        <field name="model">hr.hospital.visit</field>
+        <field name="arch" type="xml">
+            <list default_order="planned_date desc">
+                <field name="planned_date"/>
+                <field name="visit_date"/>
+                <field name="doctor_id"/>
+                <field name="patient_id"/>
+                <field name="disease_id"/>
+                <field name="status"/>
+            </list>
+        </field>
+    </record>
 
-        <record id="hr_hospital_visit_form" model="ir.ui.view">
-            <field name="name">hr.hospital.visit.form ()</field>
-            <field name="model">hr.hospital.visit</field>
-            <field name="arch" type="xml">
-                <form>
-                    <header></header>
-                    <sheet>
+    <record id="hr_hospital_visit_search" model="ir.ui.view">
+        <field name="name">hr.hospital.visit.search</field>
+        <field name="model">hr.hospital.visit</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="doctor_id"/>
+                <field name="patient_id"/>
+                <filter string="Current Year" name="year"
+                    domain="[('planned_date', '&gt;=', (context_today()).strftime('%Y-01-01')),
+                            ('planned_date', '&lt;=', (context_today()).strftime('%Y-12-31'))]"/>
+                <separator/>
+                <filter string="Archived" name="inactive" domain="[('active','=',False)]"/>
+                <separator/>
+                <searchpanel>
+                    <field name="doctor_id"
+                           string="Doctor"
+                           enable_counters="1"
+                           icon="fa-user-md"
+                           color="#338ABB"
+                           select="multi"/> <field name="status"
+                           string="Status"
+                           icon="fa-filter"
+                           enable_counters="1"/>
+                </searchpanel>
+
+                <filter string="By Status" name="group_by_status" context="{'group_by':'status'}"/>
+                <filter string="By Doctor" name="group_by_doctor" context="{'group_by':'doctor_id'}"/>
+                <filter string="By Patient" name="group_by_patient" context="{'group_by':'patient_id'}"/>
+                <filter string="By Disease" name="group_by_disease" context="{'group_by':'disease_id'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="hr_hospital_visit_pivot" model="ir.ui.view">
+        <field name="name">hr.hospital.visit.pivot</field>
+        <field name="model">hr.hospital.visit</field>
+        <field name="arch" type="xml">
+            <pivot string="Visits Analysis">
+                <field name="doctor_id" type="row"/>
+                <field name="planned_date" interval="month" type="row"/>
+                <field name="status" type="col"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="hr_hospital_visit_calendar" model="ir.ui.view">
+        <field name="name">hr.hospital.visit.calendar</field>
+        <field name="model">hr.hospital.visit</field>
+        <field name="priority" eval="10"/>
+        <field name="arch" type="xml">
+            <calendar string="Visits" date_start="planned_date" color="doctor_id" quick_create="False" mode="month">
+                <field name="patient_id"/>
+                <field name="doctor_id"/>
+                <field name="status"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="hr_hospital_visit_graph" model="ir.ui.view">
+        <field name="name">hr.hospital.visit.graph</field>
+        <field name="model">hr.hospital.visit</field>
+        <field name="arch" type="xml">
+            <graph string="Visits by Month &amp; Disease" type="bar" stacked="1" sample="1">
+                <field name="planned_date" interval="month"/>
+                <field name="disease_id"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="hr_hospital_visit_form" model="ir.ui.view">
+        <field name="name">hr.hospital.visit.form ()</field>
+        <field name="model">hr.hospital.visit</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="status" widget="statusbar" statusbar_visible="planned,completed,cancelled" options="{'clickable': '1'}"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_similar_disease_visits"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-list"
+                                invisible="not disease_id">
+                            <div class="o_stat_info">
+                                <span class="o_stat_text">Similar Visits</span>
+                            </div>
+                        </button>
+                    </div>
+
+                    <group>
                         <group>
-                            <group>
-                                <field name="planned_date" readonly="status != 'planned'"/>
-                                <field name="visit_date" readonly="status != 'planned'"/>
-                                <field name="status"/>
-                                <field name="summary"/>
-                                <field name="disease_id"/>
-                                <field name="active" readonly="status != 'planned'"/>
-                            </group>
-                            <group>
-                                <field name="doctor_id" readonly="status != 'planned'"/>
-                                <field name="patient_id"/>
-                            </group>
+                            <field name="planned_date" readonly="status != 'planned'"/>
+                            <field name="visit_date" readonly="status != 'planned'"/>
+                            <field name="disease_id"/>
                         </group>
-                    </sheet>
-                </form>
-            </field>
-        </record>
+                        <group>
+                            <field name="doctor_id" readonly="status != 'planned'"/>
+                            <field name="patient_id"/>
+                            <field name="active" readonly="status != 'planned'"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Visit Details">
+                            <field name="summary" placeholder="Enter epicrisis here..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
 
-        <record id="action_hr_hospital_visit_window" model="ir.actions.act_window">
-            <field name="name">Visit</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">hr.hospital.visit</field>
-            <field name="view_mode">list,form</field>
-        </record>
+    <record id="action_hr_hospital_visit_window" model="ir.actions.act_window">
+        <field name="name">Visit</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hr.hospital.visit</field>
+        <field name="view_mode">list,calendar,pivot,graph,form</field>
+        <field name="context">{
+        'search_default_year': 1}</field>
+    </record>
 
-        <menuitem id="hr_hospital_menu_item_visit"
-                  action="action_hr_hospital_visit_window"
-                  parent="hr_hospital_menu_patient"
-                  name="Visit" sequence="200"/>
+    <menuitem id="hr_hospital_menu_item_visit"
+              action="action_hr_hospital_visit_window"
+              parent="hr_hospital_menu_patient"
+              name="Visit" sequence="200"/>
 </odoo>

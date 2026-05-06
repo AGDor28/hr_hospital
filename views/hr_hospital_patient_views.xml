@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
         <record id="hr_hospital_patient_tree" model="ir.ui.view">
             <field name="name">hr.hospital.patient.tree ()</field>
@@ -18,21 +19,79 @@
             <field name="arch" type="xml">
                 <form>
                     <header>
+                        <button name="action_create_new_visit"
+                        string="Schedule Visit"
+                        type="object"
+                        class="oe_highlight"/>
                     </header>
                     <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_view_patient_visits"
+                                    type="object"
+                                    class="oe_stat_button"
+                                    icon="fa-calendar">
+                                <field name="visit_count" widget="statinfo" string="Visits"/>
+                            </button>
+                        </div>
+
                         <group>
                             <group>
                                 <field name="name"/>
                                 <field name="insurance_number"/>
-                                <field name="personal_doctor"/>
+                                <field name="phone"/>
                             </group>
                             <group>
-                                <field name="disease_ids"/>
-                                <field name="doctor_history_ids"/>
+                                <field name="personal_doctor"/>
                             </group>
                         </group>
+
+                        <notebook>
+                            <page string="Diseases" name="diseases">
+                                <field name="disease_ids">
+                                    <list>
+                                        <field name="name"/>
+                                        </list>
+                                </field>
+                            </page>
+
+                            <page string="Visit History" name="visit_history">
+                                <field name="visit_ids">
+                                    <list editable="bottom">
+                                        <field name="doctor_id"/>
+                                        <field name="status"/>
+                                        <field name="planned_date"/>
+                                        </list>
+                                </field>
+                            </page>
+
+                            <page string="Doctor History" name="doctor_history">
+                                <field name="doctor_history_ids">
+                                    <list editable="bottom">
+                                        <field name="doctor_id"/>
+                                        <field name="assignment_date"/>
+                                        </list>
+                                </field>
+                            </page>
+                        </notebook>
                     </sheet>
                 </form>
+            </field>
+        </record>
+
+        <record id="hr_hospital_patient_search" model="ir.ui.view">
+            <field name="name">hr.hospital.patient.search</field>
+            <field name="model">hr.hospital.patient</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name" string="Patient Name" filter_domain="['|', ('name', 'ilike', self), ('display_name', 'ilike', self)]"/>
+
+                    <field name="phone" string="Phone Number"/>
+
+                    <separator/>
+
+                    <filter string="Personal Doctor" name="group_by_doctor" context="{'group_by': 'personal_doctor'}"/>
+
+                </search>
             </field>
         </record>
 
@@ -41,6 +100,7 @@
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">hr.hospital.patient</field>
             <field name="view_mode">list,form</field>
+            <field name="search_view_id" ref="hr_hospital_patient_search"/>
         </record>
 
         <menuitem id="hr_hospital_menu_item_patient"

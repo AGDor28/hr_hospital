@@ -46,7 +46,7 @@ class HospitalVisit(models.Model):
 
     disease_id = fields.Many2one(
         comodel_name='hr.hospital.disease',
-        string='Diagnosis / Disease'
+        string='Disease'
     )
 
     active = fields.Boolean(default=True)
@@ -63,3 +63,23 @@ class HospitalVisit(models.Model):
                 if obj.status == 'completed':
                     raise UserError("You cannot archive a visit that has already taken place.")
         return super(HospitalVisit, self).write(vals)
+
+    @api.depends('doctor_id', 'planned_date', 'patient_id')
+    def _compute_display_name(self):
+        for record in self:
+            name = f"{record.doctor_id.name}"
+            if record.patient_id:
+                name += f" ({record.patient_id.name})"
+            record.display_name = name
+
+    def action_view_similar_disease_visits(self):
+        self.ensure_one()
+        return {
+            'name': 'Visits with Same Disease',
+            'type': 'ir.actions.act_window',
+            'res_model': 'hr.hospital.visit',
+            'view_mode': 'list,form',
+            'domain': [('disease_id', '=', self.disease_id.id)],
+            'context': {'default_disease_id': self.disease_id.id},
+            'target': 'current',
+        }

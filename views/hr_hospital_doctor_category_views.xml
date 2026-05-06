@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
         <record id="hr_hospital_doctor_category_tree" model="ir.ui.view">
             <field name="name">hr.hospital.doctor.category.tree ()</field>
