@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
   <menuitem id="hr_hospital_main_menu"
@@ -11,6 +12,10 @@
   <menuitem id="hr_hospital_menu_doctor"
             parent="hr_hospital_main_menu"
             name="Doctor" sequence="100"/>
+
+  <menuitem id="hr_hospital_menu_disease"
+            parent="hr_hospital_main_menu"
+            name="Disease" sequence="100"/>
 
   <menuitem id="hr_hospital_menu_main_settings"
             parent="hr_hospital_main_menu"

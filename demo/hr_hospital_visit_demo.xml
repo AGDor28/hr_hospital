@@ -47,5 +47,60 @@
             <field name="summary"><![CDATA[<p>Chief complaint: rhinitis. Recommended: antiallergic medication.</p>]]></field>
             <field name="disease_id" ref="disease_asthma"/>
         </record>
+
+        <record id="visit_7" model="hr.hospital.visit">
+            <field name="doctor_id" ref="doctor_intern_2"/>
+            <field name="patient_id" ref="patient_case_3"/>
+            <field name="status">planned</field>
+            <field name="planned_date">2026-05-25</field>
+        </record>
+
+        <record id="visit_8" model="hr.hospital.visit">
+            <field name="doctor_id" ref="doctor_intern_2"/>
+            <field name="patient_id" ref="patient_case_1"/>
+            <field name="status">completed</field>
+            <field name="planned_date">2026-05-01</field>
+            <field name="visit_date">2026-05-01</field>
+            <field name="summary"><![CDATA[<p>Chief complaint: headache. Recommended: rest.</p>]]></field>
+            <field name="disease_id" ref="disease_flu"/>
+        </record>
+
+        <record id="visit_9" model="hr.hospital.visit">
+            <field name="doctor_id" ref="doctor_head"/>
+            <field name="patient_id" ref="patient_case_3"/>
+            <field name="status">cancelled</field>
+            <field name="planned_date">2026-05-14</field>
+        </record>
+
+        <record id="visit_10" model="hr.hospital.visit">
+            <field name="doctor_id" ref="doctor_intern_1"/>
+            <field name="patient_id" ref="patient_case_2"/>
+            <field name="status">planned</field>
+            <field name="planned_date">2026-05-30</field>
+        </record>
+
+        <record id="visit_11" model="hr.hospital.visit">
+            <field name="doctor_id" ref="doctor_chief"/>
+            <field name="patient_id" ref="patient_case_3"/>
+            <field name="status">planned</field>
+            <field name="planned_date">2026-05-22</field>
+        </record>
+
+        <record id="visit_12" model="hr.hospital.visit">
+            <field name="doctor_id" ref="doctor_chief"/>
+            <field name="patient_id" ref="patient_case_2"/>
+            <field name="status">completed</field>
+            <field name="planned_date">2026-03-24</field>
+            <field name="visit_date">2026-03-24</field>
+            <field name="summary"><![CDATA[<p>Chief complaint: headache. Recommended: rest.</p>]]></field>
+            <field name="disease_id" ref="disease_covid"/>
+        </record>
+
+        <record id="visit_13" model="hr.hospital.visit">
+            <field name="doctor_id" ref="doctor_chief"/>
+            <field name="patient_id" ref="patient_case_1"/>
+            <field name="status">cancelled</field>
+            <field name="planned_date">2026-04-27</field>
+        </record>
     </data>
 </odoo>

@@ -28,5 +28,34 @@
             <field name="company_id" ref="base.main_company"/>
             <field name="mentor_id" ref="doctor_head"/>
         </record>
+
+        <record id="doctor_chief" model="hr.hospital.doctor">
+            <field name="name">Dr. Lisa Cuddy</field>
+            <field name="email">cuddy@princeton.edu</field>
+            <field name="login">cuddy</field>
+            <field name="password">admin</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="specialty">Endocrinologist</field>
+        </record>
+
+        <record id="doctor_intern_3" model="hr.hospital.doctor">
+            <field name="name">Dr. Remy Hadley</field>
+            <field name="email">hadley@princeton.edu</field>
+            <field name="login">hadley</field>
+            <field name="password">admin</field>
+            <field name="specialty">Therapist</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="mentor_id" ref="doctor_chief"/>
+        </record>
+
+        <record id="doctor_intern_4" model="hr.hospital.doctor">
+            <field name="name">Dr. Christopher Taub</field>
+            <field name="email">taub@princeton.edu</field>
+            <field name="login">taub</field>
+            <field name="password">admin</field>
+            <field name="specialty">Plastic Surgeon</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="mentor_id" ref="doctor_chief"/>
+        </record>
     </data>
 </odoo>
