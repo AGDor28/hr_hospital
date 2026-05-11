@@ -37,5 +37,6 @@
         <field name="target">new</field>
         <field name="binding_model_id" ref="model_hr_hospital_doctor"/>
         <field name="binding_view_types">list,form</field>
+        <field name="binding_type">report</field>
     </record>
 </odoo>
