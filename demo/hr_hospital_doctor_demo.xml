@@ -7,6 +7,7 @@
             <field name="password">admin</field>
             <field name="company_id" ref="base.main_company"/>
             <field name="specialty">Diagnostic</field>
+            <field name="category_id" ref="category_specialist"/>
         </record>
 
         <record id="doctor_intern_1" model="hr.hospital.doctor">
@@ -17,6 +18,7 @@
             <field name="specialty">Surgeon</field>
             <field name="company_id" ref="base.main_company"/>
             <field name="mentor_id" ref="doctor_head"/>
+            <field name="category_id" ref="category_intern"/>
         </record>
 
         <record id="doctor_intern_2" model="hr.hospital.doctor">
@@ -27,6 +29,7 @@
             <field name="specialty">Immunology</field>
             <field name="company_id" ref="base.main_company"/>
             <field name="mentor_id" ref="doctor_head"/>
+            <field name="category_id" ref="category_intern"/>
         </record>
 
         <record id="doctor_chief" model="hr.hospital.doctor">
@@ -36,6 +39,7 @@
             <field name="password">admin</field>
             <field name="company_id" ref="base.main_company"/>
             <field name="specialty">Endocrinologist</field>
+            <field name="category_id" ref="category_highest"/>
         </record>
 
         <record id="doctor_intern_3" model="hr.hospital.doctor">
@@ -46,6 +50,7 @@
             <field name="specialty">Therapist</field>
             <field name="company_id" ref="base.main_company"/>
             <field name="mentor_id" ref="doctor_chief"/>
+            <field name="category_id" ref="category_intern"/>
         </record>
 
         <record id="doctor_intern_4" model="hr.hospital.doctor">
@@ -56,6 +61,7 @@
             <field name="specialty">Plastic Surgeon</field>
             <field name="company_id" ref="base.main_company"/>
             <field name="mentor_id" ref="doctor_chief"/>
+            <field name="category_id" ref="category_intern"/>
         </record>
     </data>
 </odoo>

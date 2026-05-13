@@ -1,6 +1,9 @@
-from odoo import models, fields, api
 from datetime import date
+
 from dateutil.relativedelta import relativedelta
+
+from odoo import api, fields, models
+
 
 class DiseaseReportWizard(models.TransientModel):
     _name = 'hr.hospital.disease.report.wizard'

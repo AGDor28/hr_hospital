@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_hospital_doctor_paperformat" model="report.paperformat">
+        <field name="name">A4 doctor</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">40</field>
+        <field name="margin_bottom">15</field>
+        <field name="margin_left">7</field>
+        <field name="margin_right">7</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">15</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="hr_hospital_report_doctor_card" model="ir.actions.report">
+        <field name="name">Doctor`s report</field>
+        <field name="model">hr.hospital.doctor</field>
+        <field name="report_type">qweb-html</field>
+        <field name="report_name">hr_hospital.report_doctor_card_template</field>
+        <field name="report_file">hr_hospital.report_doctor_card_template</field>
+        <field name="print_report_name">'Report - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="model_hr_hospital_doctor"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="hr_hospital_doctor_paperformat"/>
+    </record>
+
+    <template id="report_doctor_card_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page" style="page-break-after: always;">
+                        <div class="text-center mb-4">
+                            <h2>Doctor: <span t-field="doc.name"/></h2>
+                            <h4>Specialty: <span t-field="doc.specialty"/></h4>
+                            <h4>Category: <span t-field="doc.category_id.name"/></h4>
+                        </div>
+
+                        <hr/>
+
+                        <h3>History of visits</h3>
+                        <table class="table table-bordered table-sm o_main_table mt-3">
+                            <thead>
+                                <tr>
+                                    <th><strong>Date</strong></th>
+                                    <th><strong>Patient</strong></th>
+                                    <th><strong>Gender</strong></th>
+                                    <th><strong>Birthday</strong></th>
+                                    <th><strong>Phone</strong></th>
+                                    <th><strong>Status</strong></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="doc.visit_ids.sorted(key=lambda v: v.planned_date, reverse=True)" t-as="visit">
+                                    <tr>
+                                        <td><span t-field="visit.planned_date"/></td>
+                                        <td><span t-field="visit.patient_id.name"/></td>
+                                        <td><span t-field="visit.patient_id.gender"/></td>
+                                        <td><span t-field="visit.patient_id.birthday"/></td>
+                                        <td><span t-field="visit.patient_id.phone"/></td>
+
+                                        <t t-set="status_style" t-value="''"/>
+                                        <t t-if="visit.status == 'planned'" t-set="status_style" t-value="'background-color: #FFFFCC;'"/>
+                                        <t t-if="visit.status == 'completed'" t-set="status_style" t-value="'background-color: #CCFFCC;'"/>
+                                        <t t-if="visit.status == 'cancelled'" t-set="status_style" t-value="'background-color: #FFCCCC;'"/>
+
+                                        <td t-att-style="status_style">
+                                            <span t-field="visit.status"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                        <br/>
+                    </div>
+
+                    <div class="footer">
+                        <div class="row text-center border-top" style="font-size: 15px;">
+                            <div class="col-6">
+                                <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d.%m.%Y %H:%M:%S')"/>
+                            </div>
+                            <div class="col-6">
+                                <span t-field="res_company.city"/>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>
