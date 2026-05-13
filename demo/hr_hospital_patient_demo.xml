@@ -2,20 +2,29 @@
     <data>
         <record id="patient_case_1" model="hr.hospital.patient">
             <field name="name">John Doe</field>
+            <field name="birthday">1990-05-15</field>
+            <field name="gender">male</field>
             <field name="disease_ids" eval="[(6, 0, [ref('hr_hospital.disease_flu')])]"/>
+            <field name="phone">987654321</field>
         </record>
 
         <record id="patient_case_2" model="hr.hospital.patient">
             <field name="name">John Watson</field>
+            <field name="birthday">1996-01-31</field>
+            <field name="gender">male</field>
             <field name="disease_ids" eval="[(6, 0, [
                 ref('hr_hospital.disease_asthma'),
                 ref('hr_hospital.disease_covid')
             ])]"/>
+            <field name="phone">1597534682</field>
         </record>
 
         <record id="patient_case_3" model="hr.hospital.patient">
             <field name="name">John Wick</field>
+            <field name="birthday">1980-08-02</field>
+            <field name="gender">male</field>
             <field name="disease_ids" eval="[(6, 0, [ref('hr_hospital.disease_asthma')])]"/>
+            <field name="phone">8524569317</field>
         </record>
     </data>
 </odoo>

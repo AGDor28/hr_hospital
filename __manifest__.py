@@ -33,6 +33,8 @@
 
         'data/hr_hospital_disease_data.xml',
         'data/hr_hospital_doctor_category_data.xml',
+
+        'report/hr_hospital_doctor_report.xml'
     ],
     'demo': [
         'demo/hr_hospital_doctor_demo.xml',

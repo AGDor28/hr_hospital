@@ -1,6 +1,6 @@
 import logging
 
-from odoo import models, fields, api
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 
 _logger = logging.getLogger(__name__)
@@ -67,6 +67,20 @@ class HospitalDoctor(models.Model):
         string='Mentor Email',
         readonly=True
     )
+
+    color = fields.Integer(
+        string='Color Index'
+    )
+
+    intern_names_list = fields.Char(
+        compute='_compute_intern_names_list',
+        string='Intern Names List'
+    )
+
+    @api.depends('intern_ids.name')
+    def _compute_intern_names_list(self):
+        for doc in self:
+            doc.intern_names_list = ", ".join(doc.intern_ids.mapped('name'))
 
     @api.depends('mentor_id')
     def _compute_is_intern(self):

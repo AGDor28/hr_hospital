@@ -120,14 +120,36 @@
             <field name="name">hr.hospital.doctor.kanban</field>
             <field name="model">hr.hospital.doctor</field>
             <field name="arch" type="xml">
-                <kanban default_group_by="specialty" class="o_kanban_dashboard">
+                <kanban highlight_color="color" default_group_by="specialty" class="o_kanban_dashboard">
                     <field name="id"/>
                     <field name="name"/>
                     <field name="specialty"/>
                     <field name="is_intern"/>
+                    <field name="color"/>
+                    <field name="intern_names_list"/>
                     <templates>
                         <t t-name="card">
-                            <div class="oe_kanban_global_click">
+                            <div>
+                                <div class="o_dropdown_kanban dropdown float-end">
+                                    <a class="dropdown-toggle o-no-caret btn" role="button" data-bs-toggle="dropdown" href="#" aria-label="Dropdown menu" title="Dropdown menu">
+                                        <span class="fa fa-ellipsis-v"/>
+                                    </a>
+                                    <div class="dropdown-menu" role="menu">
+                                        <t t-if="widget.editable">
+                                            <a role="menuitem" type="object" name="get_formview_action" class="dropdown-item">Edit</a>
+                                        </t>
+<!--                                        <t t-if="widget.editable"><a role="menuitem" type="edit" class="dropdown-item">Edit</a></t>-->
+                                        <t t-if="widget.deletable">
+                                            <a role="menuitem" type="delete" class="dropdown-item">Delete</a>
+                                        </t>
+                                        <div role="separator" class="dropdown-divider">
+                                        </div>
+                                        <div role="menuitem" aria-haspopup="true" class="col-12">
+                                            <field name="color" widget="kanban_color_picker"/>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="oe_kanban_content">
                                     <div class="o_kanban_record_top">
                                         <div class="o_kanban_record_headings">
@@ -142,15 +164,24 @@
                                             Intern
                                         </span>
                                         <div>
-                                            <i class="fa fa-stethoscope"/> <field name="specialty"/>
+                                            <i class="fa fa-stethoscope text-primary" title="Specialty"/> <field name="specialty"/>
                                         </div>
+                                    </div>
+
+                                    <div t-if="!record.is_intern.raw_value &amp;&amp; record.intern_names_list.raw_value" class="mt-2">
+                                        <div class="text-muted small"><strong>Interns:</strong></div>
+                                            <div class="d-flex flex-wrap gap-1">
+                                                <span class="badge border text-dark bg-light shadow-sm">
+                                                    <field name="intern_names_list"/>
+                                                </span>
+                                            </div>
                                     </div>
 
                                     <div class="o_kanban_record_bottom mt-3">
                                         <button name="action_create_visit"
-                                                type="object"
-                                                class="btn btn-primary btn-sm w-100">
-                                            <i class="fa fa-calendar-plus-o"/> Quick Visit
+                                                    type="object"
+                                                    class="btn btn-primary btn-sm w-100 shadow-sm">
+                                                <i class="fa fa-calendar-plus-o" title="Create Visit"/> Quick Visit
                                         </button>
                                     </div>
                                 </div>
