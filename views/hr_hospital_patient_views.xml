@@ -8,7 +8,7 @@
                     <field name="name"/>
                     <field name="visit_ids"/>
                     <field name="insurance_number"/>
-                    <field name="personal_doctor"/>
+                    <field name="personal_doctor_id"/>
                 </list>
             </field>
         </record>
@@ -41,7 +41,7 @@
                                 <field name="phone"/>
                             </group>
                             <group>
-                                <field name="personal_doctor"/>
+                                <field name="personal_doctor_id"/>
                             </group>
                         </group>
 
@@ -89,7 +89,7 @@
 
                     <separator/>
 
-                    <filter string="Personal Doctor" name="group_by_doctor" context="{'group_by': 'personal_doctor'}"/>
+                    <filter string="Personal Doctor" name="group_by_doctor" context="{'group_by': 'personal_doctor_id'}"/>
 
                 </search>
             </field>

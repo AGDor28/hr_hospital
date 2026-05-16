@@ -32,7 +32,7 @@ class DiseaseReportWizard(models.TransientModel):
 
     @api.model
     def default_get(self, fields_list):
-        res = super(DiseaseReportWizard, self).default_get(fields_list)
+        res = super().default_get(fields_list)
 
         active_model = self.env.context.get('active_model')
         active_ids = self.env.context.get('active_ids')

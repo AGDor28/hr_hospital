@@ -9,7 +9,7 @@
                     <group>
                         <field name="doctor_ids" widget="many2many_tags"/>
                         <field name="patient_ids" widget="many2many_tags"/>
-                        <field name="disease_id"/>
+                        <field name="disease_ids" widget="many2many_tags"/>
                     </group>
                     <group>
                         <field name="date_from"/>

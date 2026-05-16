@@ -30,14 +30,14 @@ class HospitalVisitReport(models.TransientModel):
         string='Only Completed Visits'
     )
 
-    disease_id = fields.Many2one(
+    disease_ids = fields.Many2many(
         comodel_name='hr.hospital.disease',
-        string='Disease'
+        string='Diseases'
     )
 
     @api.model
     def default_get(self, fields_list):
-        res = super(HospitalVisitReport, self).default_get(fields_list)
+        res = super().default_get(fields_list)
 
         active_model = self.env.context.get('active_model')
         active_ids = self.env.context.get('active_ids')
@@ -69,8 +69,8 @@ class HospitalVisitReport(models.TransientModel):
         if self.only_completed:
             domain.append(('status', '=', 'completed'))
 
-        if self.disease_id:
-            domain.append(('disease_id', 'in', self.disease_id.id))
+        if self.disease_ids:
+            domain.append(('disease_id', 'in', self.disease_ids.ids))
 
         return {
             'name': 'Filtered Visits',

@@ -60,12 +60,12 @@ class HospitalDoctorHistory(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list):
-        records = super(HospitalDoctorHistory, self).create(vals_list)
+        records = super().create(vals_list)
 
         for rec in records:
             if rec.active and rec.patient_id and rec.doctor_id:
                 rec.patient_id.write({
-                    'personal_doctor': rec.doctor_id.id
+                    'personal_doctor_id': rec.doctor_id.id
                 })
 
         return records
