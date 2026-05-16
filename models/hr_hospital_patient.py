@@ -36,7 +36,7 @@ class HospitalPatient(models.Model):
         string='Doctor history'
     )
 
-    personal_doctor = fields.Many2one(
+    personal_doctor_id = fields.Many2one(
         comodel_name='hr.hospital.doctor',
         string='Personal Doctor',
     )
@@ -77,7 +77,7 @@ class HospitalPatient(models.Model):
             'target': 'new',
             'context': {
                 'default_patient_id': self.id,
-                'default_doctor_id': self.personal_doctor.id if self.personal_doctor else False,
+                'default_doctor_id': self.personal_doctor_id.id if self.personal_doctor_id else False,
                 'default_status': 'planned',
             }
         }

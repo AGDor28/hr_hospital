@@ -38,10 +38,10 @@ class HospitalMassReassignDoctor(models.TransientModel):
             })
 
         for patient in patients:
-            if patient.personal_doctor == self.new_doctor_id:
+            if patient.personal_doctor_id == self.new_doctor_id:
                 continue
 
-            patient.personal_doctor = self.new_doctor_id
+            patient.personal_doctor_id = self.new_doctor_id
 
             self.env['hr.hospital.doctor.history'].create([{
                 'patient_id': patient.id,
