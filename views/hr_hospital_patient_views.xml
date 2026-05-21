@@ -103,9 +103,5 @@
             <field name="search_view_id" ref="hr_hospital_patient_search"/>
         </record>
 
-        <menuitem id="hr_hospital_menu_item_patient"
-                  action="action_hr_hospital_patient_window"
-                  parent="hr_hospital_menu_patient"
-                  name="Patient" sequence="200"/>
 
 </odoo>

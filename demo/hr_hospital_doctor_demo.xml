@@ -1,5 +1,6 @@
 <odoo>
     <data>
+
         <record id="doctor_head" model="hr.hospital.doctor">
             <field name="name">Dr. Gregory House</field>
             <field name="email">house@princeton.edu</field>
@@ -8,6 +9,7 @@
             <field name="company_id" ref="base.main_company"/>
             <field name="specialty">Diagnostic</field>
             <field name="category_id" ref="category_specialist"/>
+            <field name="group_ids" eval="[(4, ref('base.group_user')), (4, ref('hr_hospital.group_hospital_doctor'))]"/>
         </record>
 
         <record id="doctor_intern_1" model="hr.hospital.doctor">
@@ -19,6 +21,7 @@
             <field name="company_id" ref="base.main_company"/>
             <field name="mentor_id" ref="doctor_head"/>
             <field name="category_id" ref="category_intern"/>
+            <field name="group_ids" eval="[(4, ref('base.group_user')), (4, ref('hr_hospital.group_hospital_intern'))]"/>
         </record>
 
         <record id="doctor_intern_2" model="hr.hospital.doctor">
@@ -30,6 +33,7 @@
             <field name="company_id" ref="base.main_company"/>
             <field name="mentor_id" ref="doctor_head"/>
             <field name="category_id" ref="category_intern"/>
+            <field name="group_ids" eval="[(4, ref('base.group_user')), (4, ref('hr_hospital.group_hospital_intern'))]"/>
         </record>
 
         <record id="doctor_chief" model="hr.hospital.doctor">
@@ -40,6 +44,7 @@
             <field name="company_id" ref="base.main_company"/>
             <field name="specialty">Endocrinologist</field>
             <field name="category_id" ref="category_highest"/>
+            <field name="group_ids" eval="[(4, ref('base.group_user')), (4, ref('hr_hospital.group_hospital_doctor'))]"/>
         </record>
 
         <record id="doctor_intern_3" model="hr.hospital.doctor">
@@ -51,6 +56,7 @@
             <field name="company_id" ref="base.main_company"/>
             <field name="mentor_id" ref="doctor_chief"/>
             <field name="category_id" ref="category_intern"/>
+            <field name="group_ids" eval="[(4, ref('base.group_user')), (4, ref('hr_hospital.group_hospital_intern'))]"/>
         </record>
 
         <record id="doctor_intern_4" model="hr.hospital.doctor">
@@ -62,6 +68,7 @@
             <field name="company_id" ref="base.main_company"/>
             <field name="mentor_id" ref="doctor_chief"/>
             <field name="category_id" ref="category_intern"/>
+            <field name="group_ids" eval="[(4, ref('base.group_user')), (4, ref('hr_hospital.group_hospital_intern'))]"/>
         </record>
     </data>
 </odoo>

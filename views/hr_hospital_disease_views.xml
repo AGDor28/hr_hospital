@@ -56,8 +56,4 @@
             <field name="search_view_id" ref="hr_hospital_disease_search"/>
         </record>
 
-        <menuitem id="hr_hospital_menu_item_disease"
-                  action="action_hr_hospital_disease_window"
-                  parent="hr_hospital_menu_disease"
-                  name="Disease" sequence="200"/>
 </odoo>

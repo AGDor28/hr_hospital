@@ -8,12 +8,18 @@ _logger = logging.getLogger(__name__)
 CONST_EXP = "Hospital constant example"
 
 class HospitalDisease(models.Model):
+    """Manages the hierarchical classification of medical diseases and conditions.
+
+    This model supports tree-structured categorization (e.g., Respiratory Diseases ->
+    Infectious -> Influenza) using Odoo's nested set storage (`_parent_store`). It also
+    tracks patients diagnosed with each specific condition.
+    """
     _name = "hr.hospital.disease"
     _description = "Disease"
     _parent_name = "parent_id"
     _parent_store = True
 
-    name = fields.Char(string='Disease Name', required=True)
+    name = fields.Char(string='Disease Name', required=True, translate=True)
 
     description = fields.Text(string='Description')
 
@@ -38,12 +44,20 @@ class HospitalDisease(models.Model):
 
     display_name = fields.Char(
         compute='_compute_display_name',
-        store=True,
-        recursive=True
+        recursive=True,
     )
 
     @api.onchange('parent_id')
     def _onchange_parent_id(self):
+        """Validates the parent disease selection dynamically in the UI.
+
+        Triggers a warning notification if a user attempts to select the record itself
+        as its own parent before saving.
+
+        Returns:
+        dict or None: A warning dictionary with title and message if a recursive
+        assignment attempt is detected, otherwise None.
+        """
         if self.parent_id and self.parent_id.id == self.id.origin:
             return {
                     'warning': {
@@ -55,12 +69,24 @@ class HospitalDisease(models.Model):
 
     @api.constrains('parent_id')
     def _check_parent_id(self):
+        """Enforces database integrity by preventing infinite recursive loops.
+
+        Checks the modified tree structure using Odoo's internal graph validation.
+
+        Raises:
+        ValidationError: If the parent-child relationship forms a closed cycle.
+        """
         if self._has_cycle():
             raise ValidationError("Error! You cannot create recursive hierarchy."
             )
 
     @api.depends('name', 'parent_id')
     def _compute_display_name(self):
+        """Computes a breadcrumb-style string representing the full disease hierarchy.
+
+        Traverses upward through parent records to build a readable path.
+        Example output: "Internal Medicine / Infectious / Influenza"
+        """
         for obj in self:
             if obj.parent_id:
                 name = obj.name

@@ -128,7 +128,7 @@
     </record>
 
     <record id="action_hr_hospital_visit_window" model="ir.actions.act_window">
-        <field name="name">Visit</field>
+        <field name="name">Visits</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">hr.hospital.visit</field>
         <field name="view_mode">list,calendar,pivot,graph,form</field>
@@ -136,8 +136,4 @@
         'search_default_year': 1}</field>
     </record>
 
-    <menuitem id="hr_hospital_menu_item_visit"
-              action="action_hr_hospital_visit_window"
-              parent="hr_hospital_menu_patient"
-              name="Visit" sequence="200"/>
 </odoo>

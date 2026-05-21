@@ -5,6 +5,13 @@ from odoo import fields, models
 _logger = logging.getLogger(__name__)
 
 class HospitalMassReassignDoctor(models.TransientModel):
+    """An administrative utility wizard to execute bulk transfers of patient rosters.
+
+    Designed to handle personnel reshuffling or shift handovers by processing
+    a collection of selected patients, closing out their current active primary
+    physician history timelines, assigning a new physician, and recording audit
+    logs in a single operation.
+    """
     _name = 'hr.hospital.mass.reassign.doctor.wizard'
     _description = 'Mass Reassign Doctor'
 
@@ -20,6 +27,16 @@ class HospitalMassReassignDoctor(models.TransientModel):
     )
 
     def reassign_doctor(self):
+        """Processes and alters historical assignments for a collection of selected patients.
+
+        Extracts patient indices from execution context arrays, sets termination
+        dates on lingering open historical records, remaps the patient master profiles,
+        and initializes new active doctor history rows. Skips execution if the target
+        doctor is already assigned as the primary provider.
+
+        Returns:
+            None: Concludes routine execution silently after processing batch data updates.
+        """
         active_patient_ids = self.env.context.get('active_ids')
         if not active_patient_ids or not self.new_doctor_id:
             return
