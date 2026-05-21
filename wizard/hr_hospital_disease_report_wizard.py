@@ -6,6 +6,12 @@ from odoo import api, fields, models
 
 
 class DiseaseReportWizard(models.TransientModel):
+    """A transient wizard to generate analytical reports filtered by diseases and doctors.
+
+    Provides parameters to define a time window, specific medical staff, and precise
+    illnesses. It dynamic builds standard filters to display aggregate statistics in
+    pivot, list, or form representations.
+    """
     _name = 'hr.hospital.disease.report.wizard'
     _description = 'Disease Report Wizard'
 
@@ -32,6 +38,20 @@ class DiseaseReportWizard(models.TransientModel):
 
     @api.model
     def default_get(self, fields_list):
+        """Pre-populates configuration parameters using active user context records.
+
+        If launching directly from a specific doctor's profile or form action view,
+        this method intercepts the active background IDs to pre-select that doctor
+        within the wizard fields.
+
+        Args:
+            fields_list (list[str]): Names of the fields configured on the model
+                requesting baseline initialization.
+
+        Returns:
+            dict: Standard initialization mappings, potentially including selected
+                doctor reference command tuples.
+        """
         res = super().default_get(fields_list)
 
         active_model = self.env.context.get('active_model')
@@ -43,6 +63,15 @@ class DiseaseReportWizard(models.TransientModel):
         return res
 
     def action_generate_report(self):
+        """Compiles search filters and redirects to a grouped dashboard of matching visits.
+
+        Evaluates chronological constraints along with selected relational fields
+        to launch a custom filtered Action window.
+
+        Returns:
+            dict: An ir.actions.act_window configuration structure pointing to
+                the visits ledger, set to automatically group rows by disease category.
+        """
         self.ensure_one()
 
         domain = [

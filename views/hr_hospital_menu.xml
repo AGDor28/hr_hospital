@@ -3,21 +3,50 @@
 
   <menuitem id="hr_hospital_main_menu"
             web_icon="hr_hospital,static/description/icon.png"
-            name="hospital" sequence="300"/>
+            name="hospital" sequence="300"
+            groups="hr_hospital.group_hospital_patient"/>
+
+  <menuitem id="hr_hospital_menu_visit"
+            parent="hr_hospital_main_menu"
+            name="Visits" sequence="10"/>
+
+  <menuitem id="hr_hospital_menu_item_visit"
+            action="action_hr_hospital_visit_window"
+            parent="hr_hospital_menu_visit"
+            name="My Visits" sequence="10"/>
 
   <menuitem id="hr_hospital_menu_patient"
             parent="hr_hospital_main_menu"
-            name="Patient" sequence="100"/>
+            name="Patient" sequence="100"
+            groups="hr_hospital.group_hospital_intern"/>
+
+  <menuitem id="hr_hospital_menu_item_patient"
+            action="action_hr_hospital_patient_window"
+            parent="hr_hospital_menu_patient"
+            name="Patients List" sequence="10"/>
 
   <menuitem id="hr_hospital_menu_doctor"
             parent="hr_hospital_main_menu"
-            name="Doctor" sequence="100"/>
+            name="Doctor" sequence="100"
+            groups="hr_hospital.group_hospital_intern"/>
+
+  <menuitem id="hr_hospital_menu_item_doctor"
+            action="action_hr_hospital_doctor_window"
+            parent="hr_hospital_menu_doctor"
+            name="Doctors List" sequence="10"/>
 
   <menuitem id="hr_hospital_menu_disease"
             parent="hr_hospital_main_menu"
-            name="Disease" sequence="100"/>
+            name="Disease" sequence="100"
+            groups="hr_hospital.group_hospital_intern"/>
+
+  <menuitem id="hr_hospital_menu_item_disease"
+            action="action_hr_hospital_disease_window"
+            parent="hr_hospital_menu_disease"
+            name="Diseases List" sequence="10"/>
 
   <menuitem id="hr_hospital_menu_main_settings"
             parent="hr_hospital_main_menu"
-            name="Settings" sequence="900"/>
+            name="Settings" sequence="900"
+            groups="hr_hospital.group_hospital_manager"/>
 </odoo>

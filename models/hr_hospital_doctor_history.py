@@ -7,6 +7,12 @@ _logger = logging.getLogger(__name__)
 CONST_EXP = "Hospital constant example"
 
 class HospitalDoctorHistory(models.Model):
+    """Tracks historical reassignments and timelines of personal doctors for patients.
+
+    Maintains a continuous record of when a physician was assigned to a patient
+    and when they were replaced, while automatically synchronization changes back
+    to the active patient profile.
+    """
     _name = "hr.hospital.doctor.history"
     _description = "History"
 
@@ -38,6 +44,15 @@ class HospitalDoctorHistory(models.Model):
 
     @api.onchange('assignment_date', 'reassignment_date')
     def _onchange_dates_check(self):
+        """Performs a real-time logical chronological validation on historical dates.
+
+        Prevents users from setting an end/reassignment date that occurs prior to
+        the initial assignment date.
+
+        Returns:
+        dict or None: A warning structure that resets the invalid reassignment date
+        field back to False if a chronological error is caught, otherwise None.
+        """
         if self.assignment_date and self.reassignment_date:
             if self.reassignment_date < self.assignment_date:
                 self.reassignment_date = False
@@ -51,6 +66,12 @@ class HospitalDoctorHistory(models.Model):
 
     @api.depends('patient_id.name', 'doctor_id.name', 'doctor_id.category_id.name', 'assignment_date')
     def _compute_display_name(self):
+        """Constructs an analytical tracking name for history entries.
+
+        Synthesizes patient context, physician profile details, rank categories, and
+        the effective relationship starting date.
+        Example output: "John Doe - Dr. Smith (Senior Consultant) 2026-05-20"
+        """
         for obj in self:
             patient_name = obj.patient_id.name
             doctor_name = obj.doctor_id.name
@@ -60,6 +81,19 @@ class HospitalDoctorHistory(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list):
+        """Extends batch record creation to synchronize active personal doctor assignments.
+
+        When a new active history line is created, this method automatically updates
+        the `personal_doctor_id` on the corresponding patient's master file to match
+        the newly assigned doctor.
+
+        Args:
+            vals_list (list[dict]): A list of dictionaries containing field values
+                for initializing new history records.
+
+        Returns:
+            models.Recordset: The newly generated history records recordset.
+        """
         records = super().create(vals_list)
 
         for rec in records:

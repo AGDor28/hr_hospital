@@ -5,6 +5,12 @@ from odoo import api, fields, models
 _logger = logging.getLogger(__name__)
 
 class HospitalVisitReport(models.TransientModel):
+    """A detailed multi-criteria search wizard to extract clinical transaction records.
+
+    Allows back-office operators or administrative chiefs to build custom cross-sections
+    of data by intersecting arbitrary arrays of doctors, patients, dates, completed
+    statuses, and exact medical diagnoses.
+    """
     _name = 'hr.hospital.visit.report.wizard'
     _description = 'Visit Report'
 
@@ -37,6 +43,19 @@ class HospitalVisitReport(models.TransientModel):
 
     @api.model
     def default_get(self, fields_list):
+        """Interceptors operational context parameters to dynamically seed filters on startup.
+
+        Detects whether this reporting popup was triggered from a patient dashboard
+        or a medical practitioner ledger, automatically populating the corresponding
+        filter parameter to streamline user interaction.
+
+        Args:
+            fields_list (list[str]): Names of the fields configured on the model
+                requesting baseline initialization.
+
+        Returns:
+            dict: Initial values dictionary containing contextual structural mappings.
+        """
         res = super().default_get(fields_list)
 
         active_model = self.env.context.get('active_model')
@@ -50,6 +69,15 @@ class HospitalVisitReport(models.TransientModel):
         return res
 
     def action_generate_report(self):
+        """Assembles user constraints into a search domain and opens the resulting visit logs.
+
+        Dynamically checks every criteria field to formulate precise database lookup clauses,
+        evaluating conditions based on actual clinical observation execution dates.
+
+        Returns:
+            dict: Window action configuration dictionary mapping to the matching
+                    hr.hospital.visit` views.
+        """
         self.ensure_one()
 
         domain = []
